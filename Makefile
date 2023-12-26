@@ -1,0 +1,4 @@
+
+dk = docker 
+run:
+	$(dk)	
