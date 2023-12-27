@@ -19,7 +19,7 @@ export DATABASE_PASS_ROOT="com#2019"
 
 mkdir -p  /var/www/html
 cd  /var/www/html
-rm -rf *
+# rm -rf *
 curl  -s https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /bin/wp 
 chmod 100  /bin/wp 
 
@@ -42,5 +42,4 @@ sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm
 
 mkdir /run/php
 
-/usr/sbin/php-fpm7.4 -F
-bash 
+/usr/sbin/php-fpm7.4 -F 

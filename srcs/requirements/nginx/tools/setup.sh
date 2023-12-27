@@ -2,17 +2,16 @@
 #---- TMP ENV ------------
 export CERT_PATH="/etc/ssl/certs/nginx-selfsigned.crt"
 
-DOMAIN_NAME='127.0.0.1'
+DOMAIN_NAME='localhost'
 #DOMAIN_NAME=ebennamr.42.fr
 #---- END TMP ------------
+mkdir -p "/etc/nginx/ssl/"
 
-openssl req -x509 -days 730 -newkey res:2048 \
-    -keyout /etc/ssl/private/nginx-selfsigned.key  -out $CERT_PATH \
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt -subj "/C=MO/L=KHOURIBGA/O=incepcption/OU=Student/CN=ebennamr.42.fr"
 
-   -subj "/C=MO/L=KHOURIBGA/O=incepcption/OU=Studnet/CN=ebennamr.42.fr"
-
-
-
+mv nginx-selfsigned.crt /etc/nginx/ssl/nginx-selfsigned.crt
+mv  nginx-selfsigned.key /etc/nginx/ssl/nginx-selfsigned.key
+echo "----------------------- done -----------------"
 echo "
 server {
     listen 443 ssl;
@@ -20,8 +19,8 @@ server {
 
     #server_name www.$DOMAIN_NAME $DOMAIN_NAME;
 
-    ssl_certificate $CERT_PATH;
-    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;" > /etc/nginx/sites-available/default
+    ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;" > /etc/nginx/sites-available/default
 
 
 echo '

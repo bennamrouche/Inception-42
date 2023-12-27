@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  maraidb:
+    container_name: maraidb 
+    build: srcs/requirements/mariadb/
+    networks:
+      - docker-network:
+    restart: always
+networks:
+    docker-network:
+volumes:
+  - /home/ebennamr/data/maraidb:maraidb
+  -  /home/ebennamr/data/wordpress:wordpress
