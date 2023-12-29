@@ -2,9 +2,13 @@
 // source  https://wordpress.org/documentation/article/editing-wp-config-php/
 
 
-define( 'DB_USER', '__user__' );
-define( 'DB_PASSWORD', '__use_pass__' );
-define( 'DB_HOST', '__host__' );
+// define( 'DB_USER', '__user__' );
+// define( 'DB_PASSWORD', '__use_pass__' );
+// define( 'DB_HOST', '__host__' );
+define( 'DB_USER', 'alphaben' );
+define( 'DB_PASSWORD', '2019@com' );
+define( 'DB_HOST', 'mariadb' );
+define('DB_NAME', 'all_data');
 define( 'DB_CHARSET', 'utf8' );
 
 define( 'DB_COLLATE', '' );
@@ -25,5 +29,8 @@ $table_prefix = 'wp_';
 
 
 define( 'WP_DEBUG', false );
+if ( ! defined( 'ABSPATH' ) )
+  define( 'ABSPATH', dirname( __FILE__ ) . '/' );
+require_once ABSPATH . 'wp-settings.php'
 
 ?>

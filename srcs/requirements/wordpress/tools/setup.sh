@@ -11,7 +11,7 @@ export NEW_USER_PASS="12mosa3"
 export NEW_USER_EMAIL="mosa@gmai.com" 
 export DATABASE_NAME=all_data 
 export DATABASE_USER=alphaben
-export DATABASE_PASS=2019@com 
+export DATABASE_PASS="2019@com"
 export DATABASE_PASS_ROOT="com#2019"
 
 #----- end Tmp info ------
@@ -19,7 +19,7 @@ export DATABASE_PASS_ROOT="com#2019"
 
 mkdir -p  /var/www/html
 cd  /var/www/html
-# rm -rf *
+rm -rf *
 curl  -s https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /bin/wp 
 chmod 100  /bin/wp 
 
@@ -41,5 +41,7 @@ wp theme install faced --activate --allow-root
 sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm/pool.d/www.conf
 
 mkdir /run/php
+chown -R www-data:www-data /var/www/html
+chmod -R 755 /var/www/html
 
 /usr/sbin/php-fpm7.4 -F 
