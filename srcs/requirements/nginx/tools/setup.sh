@@ -1,8 +1,8 @@
 #!/bin/bash 
 #---- TMP ENV ------------
 export CERT_PATH="/etc/ssl/certs/nginx-selfsigned.crt"
-
 DOMAIN_NAME='localhost'
+
 #DOMAIN_NAME=ebennamr.42.fr
 #---- END TMP ------------
 mkdir -p "/etc/nginx/ssl/"

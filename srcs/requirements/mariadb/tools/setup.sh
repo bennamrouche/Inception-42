@@ -8,8 +8,14 @@ export DATABASE_PASS="2019@com"
 export DATABASE_PASS_ROOT="com#2019"
 
 #----- END ENV ------
-echo "---- START UP ------------------- "
-mysql_install_db
+
+# ls  /var/lib/mysql/ > /dev/null 2>&1
+
+# if [$? -ne  0 ]
+# then 
+    mysql_install_db
+# fi 
+
  mysqld_safe &
  sleep 2
 echo "CREATE DATABASE IF NOT EXISTS $DATABASE_NAME ;" \
@@ -17,8 +23,8 @@ echo "CREATE DATABASE IF NOT EXISTS $DATABASE_NAME ;" \
     "GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'%' ;" \
     "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DATABASE_PASS_ROOT' ;" \
     "FLUSH PRIVILEGES;" | mariadb -u root -p"$DATABASE_PASS_ROOT"
-        ps -a > /info 
-    mariadb-admin -u root -p"$DATABASE_PASS_ROOT" shutdown 
-echo "---- DONE :) ------------------- "
-    mysqld_safe
-bash 
+
+mariadb-admin -u root -p"$DATABASE_PASS_ROOT" shutdown 
+
+mysqld_safe
+

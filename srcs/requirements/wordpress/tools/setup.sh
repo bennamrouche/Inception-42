@@ -16,6 +16,7 @@ export DATABASE_PASS_ROOT="com#2019"
 
 #----- end Tmp info ------
 # https://developer.wordpress.org/cli/commands/core/
+sleep 15
 
 mkdir -p  /var/www/html
 cd  /var/www/html
@@ -24,13 +25,16 @@ curl  -s https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 chmod 100  /bin/wp 
 
 wp core download --allow-root  
-mv /wp-config.php /var/www/html/wp-config.php
+mv wp-config-sample.php  wp-config.php
 
+#wp config create --dbname=$DATABASE_NAME --dbuser=$DATABASE_USER  --dbpass=$DATABASE_PASS --locale=en_US
 
-sed -i -r "s/__db__/$DATABASE_NAME/1"   wp-config.php
-sed -i -r "s/__user__/$DATABASE_USER/1"  wp-config.php
-sed -i -r "s/__use_pass__/$DATABASE_PASS/1"    wp-config.php
-sed -i -r "s/__host__/mariadb/1"    wp-config.php  
+wp config set DB_NAME $DATABASE_NAME --allow-root  
+wp config set DB_USER $DATABASE_USER --allow-root  
+wp config set DB_PASSWORD $DATABASE_PASS --allow-root  
+wp config set DB_HOST mariadb  --allow-root   
+wp config set DB_CHARSET utf8 --allow-root  
+wp config set DB_COLLATE '' --allow-root  
 
 
 wp core install --url=$DOMAIN_NAME/ --title=$TITLE --admin_user=$ADMIN_USER --admin_password=$ADMIN_USER_PASS --admin_email=$ADMIN_EMAIL --skip-email --allow-root
@@ -40,7 +44,7 @@ wp theme install faced --activate --allow-root
 
 sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm/pool.d/www.conf
 
-mkdir /run/php
+mkdir -p  /run/php
 chown -R www-data:www-data /var/www/html
 chmod -R 755 /var/www/html
 

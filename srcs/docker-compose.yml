@@ -1,13 +1,86 @@
-version: '3.7'
-services:
-  maraidb:
-    container_name: maraidb 
-    build: srcs/requirements/mariadb/
-    networks:
-      - docker-network:
-    restart: always
+version: "3.8"
+
 networks:
-    docker-network:
-volumes:
-  - /home/ebennamr/data/maraidb:maraidb
-  -  /home/ebennamr/data/wordpress:wordpress
+  inception:
+    name: inception
+
+services:
+  mariadb:
+    container_name: mariadb 
+    hostname: mariadb
+    build: requirements/mariadb/
+    volumes:
+      - /home/ebennamr/data/mariadb:/var/lib/mysql
+    networks:
+      - inception  
+    env_file:
+      - .env 
+    restart: always
+
+  wordpress:
+    container_name: wordpress 
+    hostname: wordpress
+    build: requirements/wordpress/
+    networks:
+      - inception  
+    volumes:
+      - /home/ebennamr/data/wordpress:/var/www/html
+    env_file:
+      - .env 
+    restart: always
+
+  nginx:
+    container_name: nginx 
+    build: requirements/nginx/
+    networks:
+      - inception  
+    volumes:
+      - /home/ebennamr/data/wordpress:/var/www/html
+    ports:
+      - 443:443 
+    env_file:
+      - .env 
+    restart: always
+
+
+
+# networks:
+#       inception:
+#        name: inception 
+
+
+# services:
+#   mariadb:
+#     container_name: mariadb 
+#     build: srcs/requirements/mariadb/
+#     volumes:
+#           - /home/ebennamr/data/mariadb:/var/lib/mysql
+#     networks:
+#       - inception:
+#     env_file:
+#       - .env 
+#     restart: always
+#   wordpress:
+#     container_name: wordpress 
+#     build: srcs/requirements/wordpress/
+#     networks:
+#       - inception:
+#     volumes:
+#         - /home/ebennamr/data/wordpress:/var/www/html
+#     env_file:
+#       - .env 
+#     restart: always
+#   nginx:
+#     container_name: nginx 
+#     build: srcs/requirements/nginx/
+#     networks:
+#       - inception:
+#     volumes:
+#         - /home/ebennamr/data/wordpress:/var/www/html
+#     ports:
+#       - 443:433 
+#     env_file:
+#       - .env 
+#     restart: always
+
+
