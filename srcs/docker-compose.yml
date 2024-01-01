@@ -3,6 +3,21 @@ version: "3.8"
 networks:
   inception:
     name: inception
+volumes:
+  databes:
+    name: databes 
+    driver: local
+    driver_opts:
+      type: none
+      o: bind 
+      device: /home/ebennamr/data/mariadb
+  wp:
+    name: wp 
+    driver: local
+    driver_opts:
+      type: none
+      o: bind 
+      device: /home/ebennamr/data/wordpress
 
 services:
   mariadb:
@@ -10,7 +25,7 @@ services:
     hostname: mariadb
     build: requirements/mariadb/
     volumes:
-      - /home/ebennamr/data/mariadb:/var/lib/mysql
+      - databes:/var/lib/mysql
     networks:
       - inception  
     env_file:
@@ -23,8 +38,10 @@ services:
     build: requirements/wordpress/
     networks:
       - inception  
+    depends_on:
+      - mariadb
     volumes:
-      - /home/ebennamr/data/wordpress:/var/www/html
+      - wp:/var/www/html
     env_file:
       - .env 
     restart: always
@@ -32,55 +49,14 @@ services:
   nginx:
     container_name: nginx 
     build: requirements/nginx/
+    depends_on:
+      - wordpress
     networks:
       - inception  
     volumes:
-      - /home/ebennamr/data/wordpress:/var/www/html
+      - wp:/var/www/html
     ports:
       - 443:443 
     env_file:
       - .env 
     restart: always
-
-
-
-# networks:
-#       inception:
-#        name: inception 
-
-
-# services:
-#   mariadb:
-#     container_name: mariadb 
-#     build: srcs/requirements/mariadb/
-#     volumes:
-#           - /home/ebennamr/data/mariadb:/var/lib/mysql
-#     networks:
-#       - inception:
-#     env_file:
-#       - .env 
-#     restart: always
-#   wordpress:
-#     container_name: wordpress 
-#     build: srcs/requirements/wordpress/
-#     networks:
-#       - inception:
-#     volumes:
-#         - /home/ebennamr/data/wordpress:/var/www/html
-#     env_file:
-#       - .env 
-#     restart: always
-#   nginx:
-#     container_name: nginx 
-#     build: srcs/requirements/nginx/
-#     networks:
-#       - inception:
-#     volumes:
-#         - /home/ebennamr/data/wordpress:/var/www/html
-#     ports:
-#       - 443:433 
-#     env_file:
-#       - .env 
-#     restart: always
-
-

@@ -1,21 +1,5 @@
 #!/bin/bash 
-
-#------ TMP ENV -----
-
-export DATABASE_NAME=all_data 
-export DATABASE_USER=alphaben
-export DATABASE_PASS="2019@com" 
-export DATABASE_PASS_ROOT="com#2019"
-
-#----- END ENV ------
-
-# ls  /var/lib/mysql/ > /dev/null 2>&1
-
-# if [$? -ne  0 ]
-# then 
-    mysql_install_db
-# fi 
-
+mysql_install_db
  mysqld_safe &
  sleep 2
 echo "CREATE DATABASE IF NOT EXISTS $DATABASE_NAME ;" \
