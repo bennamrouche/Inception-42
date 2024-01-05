@@ -21,6 +21,7 @@ volumes:
 
 services:
   mariadb:
+    image: mariadb
     container_name: mariadb 
     hostname: mariadb
     build: requirements/mariadb/
@@ -34,6 +35,7 @@ services:
 
   wordpress:
     container_name: wordpress 
+    image: wordpress
     hostname: wordpress
     build: requirements/wordpress/
     networks:
@@ -48,6 +50,7 @@ services:
 
   nginx:
     container_name: nginx 
+    image: nginx
     build: requirements/nginx/
     depends_on:
       - wordpress
